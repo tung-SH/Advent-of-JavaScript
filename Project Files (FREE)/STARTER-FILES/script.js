@@ -1,8 +1,11 @@
 /*****************************************
  * 
- *          START AND STOP THE TIMER
+ *          TOGGLE THE TIMER
  * 
  */
+ const start = document.body.querySelector('button.start')
+
+ start.addEventListener('click', toggleTimer)
 
 
 
