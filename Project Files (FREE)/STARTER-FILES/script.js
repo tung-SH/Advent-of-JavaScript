@@ -3,11 +3,16 @@
  *          TOGGLE THE TIMER
  * 
  */
- const start = document.body.querySelector('button.start')
+// input
+const start = document.body.querySelector('button.start')
 
- start.addEventListener('click', toggleTimer)
+start.addEventListener('click', toggleTimer)
 
+// output
+function toggleTimer() {
 
+    return true;
+}
 
 
 
