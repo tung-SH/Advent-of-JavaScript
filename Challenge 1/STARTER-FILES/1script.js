@@ -10,29 +10,33 @@ btnStart.addEventListener('click', toggleTimer)
 
 
 // process
-let isWorking = false;
+let timer = {
+    isWorking: false
+}
+
+let x; // Một dòng đơn giản quyết định cả 1 vấn đề nho nhỏ khiến mình bâng khâng trong vài ngày liền
 
 function toggleTimer() {
-    isWorking = !isWorking;
+    timer.isWorking = !timer.isWorking;
 
-    if (isWorking) {
+    if (timer.isWorking) {
         startTimer()
     } else {
-        console.log("not working")
         stopTimer()
     }
 }
 
-  
+
 // có 1 số trường hợp thì mình nên đặt hàm trong hàm 
 const minutes = document.body.querySelector('.time .minutes input')
 const seconds = document.body.querySelector('.time .seconds input')
 
 function startTimer() {
+    console.log('inside start timer')
     let minutesValue = minutes.value
     let secondsValue = seconds.value
     
-    let x = setInterval(minus, 1); //mình muốn nó ở lớp ngoài 
+    x = setInterval(minus, 1000); //mình muốn nó ở lớp ngoài 
 
     function minus() { 
         if (secondsValue == 0 && minutesValue == 0) { 
