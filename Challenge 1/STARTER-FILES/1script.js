@@ -27,7 +27,7 @@ function toggleTimer() {
 }
 
 
-// có 1 số trường hợp thì mình nên đặt hàm trong hàm 
+// có 1 số trường hợp thì mình nên đặt hàm trong hàm - ví dụ như setInterval
 const minutes = document.body.querySelector('.time .minutes input')
 const seconds = document.body.querySelector('.time .seconds input')
 
@@ -36,7 +36,7 @@ function startTimer() {
     let minutesValue = minutes.value
     let secondsValue = seconds.value
     
-    x = setInterval(minus, 1000); //mình muốn nó ở lớp ngoài 
+    x = setInterval(minus, 100); //mình muốn nó ở lớp ngoài 
 
     function minus() { 
         if (secondsValue == 0 && minutesValue == 0) { 
@@ -53,8 +53,8 @@ function startTimer() {
 }
 
 function output(minutesValue, secondsValue) {
-    minutes.value = minutesValue
-    seconds.value = secondsValue
+    minutes.value = (minutesValue < 10) ? '0' + minutesValue : minutesValue
+    seconds.value = (secondsValue < 10) ? '0' + secondsValue : secondsValue
 
 }
 // nãy mình mới học là có thể bỏ hàm vào trong hàm mà - khà khà - ko được
