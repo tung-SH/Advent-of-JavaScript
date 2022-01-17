@@ -31,6 +31,7 @@ function toggleTimer() {
 
 
 function startTimer() {
+    console.log('good job Tùng, nó chạy rồi ông 😊😋😋')
     let minutesValue = minutes.value
     let secondsValue = seconds.value
 
@@ -54,6 +55,8 @@ function startTimer() {
 function stopTimer() {
     clearInterval(x)
 
+    console.log('làm tốt lắm ông, hàm stopTimer chạy ổn á 😃😤😤')
+
 }
 
 
@@ -74,3 +77,18 @@ function output(minutesValue, secondsValue) {
  *     CHANGE THE LENGTH FOR THE TIMER
  * 
  */
+const btnSettings = document.body.querySelector('button.settings')
+
+btnSettings.addEventListener('click', editTimer)
+
+
+// ouput
+function editTimer() {
+    if (minutes.disabled || seconds.disabled) {
+        minutes.disabled = false;
+        seconds.disabled = false;
+    } else {
+        minutes.disabled = true;
+        seconds.disabled = true;
+    }
+}
