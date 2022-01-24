@@ -23,9 +23,10 @@ function toggleTimer() {
     isWorking = !isWorking
 
     if (isWorking) {
+        uneditable()
         startTimer()
     } else {
-        stopTimer()
+        pauseTimer()
     }
 }
 
@@ -58,7 +59,10 @@ function stopTimer() {
     console.log('làm tốt lắm ông, hàm stopTimer chạy ổn á 😃😤😤')
 
 }
+function pauseTimer() {
+    clearInterval(x)
 
+}
 
 // output
 function output(minutesValue, secondsValue) {
@@ -79,16 +83,27 @@ function output(minutesValue, secondsValue) {
  */
 const btnSettings = document.body.querySelector('button.settings')
 
-btnSettings.addEventListener('click', editTimer)
+btnSettings.addEventListener('click', () => {
+    stopTimer()
+    isWorking = false;
 
+    editable()
+})
+minutes.addEventListener('input', checkInput)
+seconds.addEventListener('input', checkInput)
 
-// ouput
-function editTimer() {
-    if (minutes.disabled || seconds.disabled) {
-        minutes.disabled = false;
-        seconds.disabled = false;
-    } else {
-        minutes.disabled = true;
-        seconds.disabled = true;
-    }
+function checkInput(e) {
+    return true;
 }
+
+function editable() {
+    minutes.disabled = false;
+    seconds.disabled = false;
+}
+function uneditable() {
+    minutes.disabled = true;
+    seconds.disabled = true;
+}
+
+
+
