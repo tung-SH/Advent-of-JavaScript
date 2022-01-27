@@ -39,7 +39,7 @@ function startTimer() {
     let minutesValue = minutes.value
     let secondsValue = seconds.value
 
-    interval = setInterval(minus, 100);
+    interval = setInterval(minus, 1000);
 
     function minus() {
         if (secondsValue == 0 && minutesValue == 0) {
