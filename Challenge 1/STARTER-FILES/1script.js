@@ -1,83 +1,101 @@
-/*****************************************
+/**************************************************
  * 
- *          TOGGLE THE TIMER
+ *              TOGGLE TIMER
  * 
  */
-// input
+
+
+
 const btnStart = document.body.querySelector('button.start')
 
 btnStart.addEventListener('click', toggleTimer)
 
-
-// process
-let timer = {
-    isWorking: false
-}
-
-let x; // Một dòng đơn giản quyết định cả 1 vấn đề nho nhỏ khiến mình bâng khâng trong vài ngày liền
+let isWorking = false;
+let interval;
 
 function toggleTimer() {
-    timer.isWorking = !timer.isWorking;
-
-    if (timer.isWorking) {
-        startTimer()
+    if (isWorking) {
+        pauseTimer()
+        isWorking = false
     } else {
-        stopTimer()
+        startTimer()
+        isWorking = true;
     }
+    
+    // isWorking = !isWorking;
+
 }
 
 
-// có 1 số trường hợp thì mình nên đặt hàm trong hàm - ví dụ như setInterval
-const minutes = document.body.querySelector('.time .minutes input')
-const seconds = document.body.querySelector('.time .seconds input')
+const minutes = document.body.querySelector('.minutes input')
+const seconds = document.body.querySelector('.seconds input')
 
 function startTimer() {
-    console.log('inside start timer')
+    uneditable()
+    setStart()
+
     let minutesValue = minutes.value
     let secondsValue = seconds.value
-    
-    x = setInterval(minus, 100); //mình muốn nó ở lớp ngoài 
 
-    function minus() { 
-        if (secondsValue == 0 && minutesValue == 0) { 
-            clearInterval(x)
-        } else if (secondsValue <= 0) {
+    interval = setInterval(minus, 10);
+
+    function minus() {
+        if (secondsValue == 0 && minutesValue == 0) {
+            clearInterval(interval)
+        }
+        else if (secondsValue == 0) {
+            secondsValue = 59
             minutesValue -= 1;
-            secondsValue = 59;
         } else {
             secondsValue -= 1;
         }
         
         output(minutesValue, secondsValue)
-    } 
+    }
+}
+function pauseTimer() {
+    setPause()
+
+    clearInterval(interval)
 }
 
-function output(minutesValue, secondsValue) {
-    minutes.value = (minutesValue < 10) ? '0' + minutesValue : minutesValue
-    seconds.value = (secondsValue < 10) ? '0' + secondsValue : secondsValue
+
+
+
+
+function setStart() {
+    btnStart.textContent = 'pause'
 
 }
-// nãy mình mới học là có thể bỏ hàm vào trong hàm mà - khà khà - ko được
-function stopTimer() {
-    console.log('inside stopTimer')
+function setPause() {
+    btnStart.textContent = 'start'
 
-    // sai từ đoạn này
-    clearInterval(x)
-} 
+}
+function output(m, s) {
+    minutes.value = (m < 10) ? '0' + m : m;
+    seconds.value = (s < 10) ? '0' + s : s;
 
-
-
-
+}
 
 
 
-
-
-
-
-
-/*****************************************
+/****************************************************
  * 
- *     CHANGE THE LENGTH FOR THE TIMER
+ *              CHANGE THE LENGTH OF THE TIMER
  * 
  */
+const btnSettings = document.body.querySelector('button.settings')
+
+btnSettings.addEventListener('click', editable)
+
+function editable() {
+    pauseTimer()
+    isWorking = false;
+
+    minutes.disabled = false;
+    seconds.disabled = false;
+}
+function uneditable() {
+    minutes.disabled = true;
+    seconds.disabled = true;
+}
