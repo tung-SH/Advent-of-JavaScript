@@ -31,8 +31,7 @@ const minutes = document.body.querySelector('.minutes input')
 const seconds = document.body.querySelector('.seconds input')
 
 function startTimer() {
-    console.log(`vào được hàm start timer rồi ông 😊
-    `)
+    console.log( randomInteract('start timer') )
 
     uneditable()
     setStart()
@@ -57,8 +56,7 @@ function startTimer() {
     }
 }
 function pauseTimer() {
-    console.log(`vô được hàm pause timer luôn rồi ông 😄
-    `)
+    console.log( randomInteract('pause timer') )
 
     setPause()
 
@@ -95,8 +93,7 @@ const btnSettings = document.body.querySelector('button.settings')
 btnSettings.addEventListener('click', editable)
 
 function editable() {
-    console.log(`edit ngon ơ luôn ông 🤣🤣🤣
-    `)
+    console.log( randomInteract('editable') )
 
     pauseTimer()
     isWorking = false;
@@ -109,4 +106,26 @@ function editable() {
 function uneditable() {
     minutes.disabled = true;
     seconds.disabled = true;
+}
+
+
+
+
+
+
+
+// riêng của mình
+function randomInteract(name) {
+    // console.log('😋 random interact chạy ổn à nha')
+
+    let x = Math.floor( Math.random() * 3 )
+    // bao nhiêu trường hợp lặp thì con người ko để ý đên 
+    // đó là máy móc nữa        -> ni sẽ là câu hỏi cần đánh giá dựa trên thời gian lặp lại và số trường hợp
+
+    if (x == 2)      return `vô được hàm ${name} rồi ông 😊😊
+    `;
+    else if (x == 0) return `hàm ${name} vô được rồi ông 😄😄 
+    `
+    else             return `😋 ${name} chạy ổn à nha 😄😋
+    ` 
 }
