@@ -5,7 +5,7 @@
  */
 
 
-
+ 
 const btnStart = document.body.querySelector('button.start')
 
 btnStart.addEventListener('click', toggleTimer)
@@ -31,13 +31,16 @@ const minutes = document.body.querySelector('.minutes input')
 const seconds = document.body.querySelector('.seconds input')
 
 function startTimer() {
+    console.log(`vào được hàm start timer rồi ông 😊
+    `)
+
     uneditable()
     setStart()
 
     let minutesValue = minutes.value
     let secondsValue = seconds.value
 
-    interval = setInterval(minus, 10);
+    interval = setInterval(minus, 100);
 
     function minus() {
         if (secondsValue == 0 && minutesValue == 0) {
@@ -54,6 +57,9 @@ function startTimer() {
     }
 }
 function pauseTimer() {
+    console.log(`vô được hàm pause timer luôn rồi ông 😄
+    `)
+
     setPause()
 
     clearInterval(interval)
@@ -89,11 +95,16 @@ const btnSettings = document.body.querySelector('button.settings')
 btnSettings.addEventListener('click', editable)
 
 function editable() {
+    console.log(`edit ngon ơ luôn ông 🤣🤣🤣
+    `)
+
     pauseTimer()
     isWorking = false;
 
     minutes.disabled = false;
     seconds.disabled = false;
+
+    seconds.value = '00';
 }
 function uneditable() {
     minutes.disabled = true;
