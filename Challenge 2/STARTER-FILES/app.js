@@ -47,18 +47,120 @@ const menuItems = [
 
 /***************************************
  * 
- *      ADD ITEM INTO CART
+ *      TOGGLE ITEM WITH CART
  * 
  */
+menuItems.forEach(el => {
+    el.isInCart = false;
+})
+
 const btnEls = document.body.querySelectorAll('.content button')
 
 btnEls.forEach( (el,i) => {
-    el.addEventListener('click', (e) => {
-        console.log(i)
-        interact('gắn hành động vào mỗi click')
+    el.addEventListener('click', () => {
+        toggleItem(i)
     })
 })
+function toggleItem(i) {
+    if (menuItems[i].isInCart) {
+        drawOutItem(i)
+        menuItems[i].isInCart = false;
+    } else {
+        addItem(i)
+        menuItems[i].isInCart = true;
+    }
+}
 
+
+const cartSummary = document.body.querySelector('ul.cart-summary')
+function addItem(i) {
+    setAdded(i)
+
+    let a = createImg('images/' + menuItems[i].image, menuItems[i].name)
+    let b = createEl('div', 'quantity', 1)
+    let c = createEl('div', 'plate')
+    
+    c.append(a)
+    c.append(b)
+
+
+    let d = createEl('p', 'menu-item', menuItems[i].name)
+    let e = createEl('p', 'price', menuItems[i].price)
+    let f = createEl('div', 'content')
+
+    f.append(d)
+    f.append(e)
+
+    let g = createImg("images/chevron.svg", 'chevron')  // hỏi anh mentor về đoạn này sau
+    let h = createEl('button', 'decrease', g)
+    let l = createEl('div', 'quantity', 1)
+    let j = createEl('button', 'increase', g)
+    let k = createEl('div', 'quantity__wrapper')
+
+    k.append(h)
+    k.append(l)
+    k.append(j)
+
+    let m = createEl('li')
+
+    m.append(c)
+    m.append(f)
+    m.append(k)
+
+
+    cartSummary.append(m)
+
+
+    interact('add item')
+}
+
+function createEl(nameEl, classname, content) {
+    let x = document.createElement(nameEl)
+    if (classname) x.classList.add(classname);
+    if (content) x.innerHTML = content;
+
+    // interact('create element')
+    return x
+}
+function createImg(source, alternative) {
+    let x = document.createElement('img')
+    x.src = source;
+    x.alt = alternative;
+
+    // interact('create image')
+    return x
+}
+function setAdded(i) {
+    btnEls[i].className = 'in-cart'
+    btnEls[i].textContent = 'In Cart'
+    let x = createImg('images/check.svg', 'check')
+    btnEls[i].prepend(x)
+    
+
+    interact('set added')
+
+}
+
+function drawOutItem(i) {
+    setDrawOut(i)
+
+    interact('draw out item')
+    return true;
+}
+function setDrawOut(i) {
+    btnEls[i].className = 'add'
+    btnEls[i].textContent = 'Add to Cart'
+
+    interact('set draw out')
+}
+
+
+
+
+// Mình nên dành thời gian cho kho lưu trữ code nếu mình 
+// muốn tiến nhanh hơn
+
+// nghĩ cách sắp xếp code nữa -> hơi lộn xộn 
 
 
 
