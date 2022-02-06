@@ -75,12 +75,16 @@ function toggleItem(i) {
 }
 
 
-const cartSummary = document.body.querySelector('ul.cart-summary')
+const cartSummary = document.body.querySelector('ul.cart-summary');
+let arrForDrawOutItem = [];
 function addItem(i) {
     setAdded(i)
 
     let m = createEl('li', undefined, item(i))
+    arrForDrawOutItem[i] = m;
+
     cartSummary.append(m)
+
 
     interact('add item')
 }
@@ -108,7 +112,6 @@ function item(i) {
     </div>
   </li>`
 }
-
 function createEl(nameEl, classname, content) {
     let x = document.createElement(nameEl)
     if (classname) x.classList.add(classname);
@@ -132,21 +135,22 @@ function setAdded(i) {
     btnEls[i].prepend(x)
     
 
-    interact('set added')
+    // interact('set added')
 
 }
 
 function drawOutItem(i) {
     setDrawOut(i)
 
+    arrForDrawOutItem[i].remove()
+
     interact('draw out item')
-    return true;
 }
 function setDrawOut(i) {
     btnEls[i].className = 'add'
     btnEls[i].textContent = 'Add to Cart'
 
-    interact('set draw out')
+    // interact('set draw out')
 }
 
 
@@ -158,8 +162,40 @@ function setDrawOut(i) {
 // nghĩ cách sắp xếp code nữa -> hơi lộn xộn 
 
 
+/************************************************
+ * 
+ *          MODIFY THE NUMBER OF EACH ITEM
+ * 
+ */
 
+let btnIncreaseEls = document.getElementsByClassName('increase');
 
+// làm sao để mảng chứa các phẩn tử trong trang web được cập nhập liên tục
+
+if (btnIncreaseEls.length == 0) {
+
+    btnIncreaseEls.forEach( (el) => {
+        el.addEventListener('click', increase)
+    } )
+
+}
+
+function increase(e) {
+    if (e.target.tagName == 'BUTTON') {
+        let x = e.target.previousElementSibling
+    }
+    if (e.target.tagName == 'IMG') {
+        let x = e.target.parentElement.previousElementSibling
+    }
+    
+    let y = +(x.textContent);
+
+    y += 1;
+
+    x.textContent = y;
+
+    interact('increase number of item')
+}
 
 
 
