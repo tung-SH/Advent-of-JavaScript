@@ -61,6 +61,9 @@ btnEls.forEach( (el,i) => {
         toggleItem(i)
     })
 })
+
+
+
 function toggleItem(i) {
     if (menuItems[i].isInCart) {
         drawOutItem(i)
@@ -72,48 +75,43 @@ function toggleItem(i) {
 }
 
 
-const cartSummary = document.body.querySelector('ul.cart-summary')
+const cartSummary = document.body.querySelector('ul.cart-summary');
+let arrForDrawOutItem = [];
 function addItem(i) {
     setAdded(i)
 
-    let a = createImg('images/' + menuItems[i].image, menuItems[i].name)
-    let b = createEl('div', 'quantity', 1)
-    let c = createEl('div', 'plate')
-    
-    c.append(a)
-    c.append(b)
-
-
-    let d = createEl('p', 'menu-item', menuItems[i].name)
-    let e = createEl('p', 'price', menuItems[i].price)
-    let f = createEl('div', 'content')
-
-    f.append(d)
-    f.append(e)
-
-    let g = createImg("images/chevron.svg", 'chevron')  // hỏi anh mentor về đoạn này sau
-    let h = createEl('button', 'decrease', g)
-    let l = createEl('div', 'quantity', 1)
-    let j = createEl('button', 'increase', g)
-    let k = createEl('div', 'quantity__wrapper')
-
-    k.append(h)
-    k.append(l)
-    k.append(j)
-
-    let m = createEl('li')
-
-    m.append(c)
-    m.append(f)
-    m.append(k)
-
+    let m = createEl('li', undefined, item(i))
+    arrForDrawOutItem[i] = m;
 
     cartSummary.append(m)
 
 
     interact('add item')
 }
-
+function item(i) {
+    return `<li>
+    <div class="plate">
+      <img src="images/${menuItems[i].image}" alt="Fish Sticks and Fries" class="plate" />
+      <div class="quantity">1</div>
+    </div>
+    <div class="content">
+      <p class="menu-item">${menuItems[i].name}</p>
+      <p class="price">${menuItems[i].price}</p>
+    </div>
+    <div class="quantity__wrapper">
+      <button class="decrease">
+        <img src="images/chevron.svg" />
+      </button>
+      <div class="quantity">1</div>
+      <button class="increase">
+        <img src="images/chevron.svg" />
+      </button>
+    </div>
+    <div class="subtotal">
+      $6.34
+    </div>
+  </li>`
+}
 function createEl(nameEl, classname, content) {
     let x = document.createElement(nameEl)
     if (classname) x.classList.add(classname);
@@ -137,21 +135,22 @@ function setAdded(i) {
     btnEls[i].prepend(x)
     
 
-    interact('set added')
+    // interact('set added')
 
 }
 
 function drawOutItem(i) {
     setDrawOut(i)
 
+    arrForDrawOutItem[i].remove()
+
     interact('draw out item')
-    return true;
 }
 function setDrawOut(i) {
     btnEls[i].className = 'add'
     btnEls[i].textContent = 'Add to Cart'
 
-    interact('set draw out')
+    // interact('set draw out')
 }
 
 
@@ -163,8 +162,38 @@ function setDrawOut(i) {
 // nghĩ cách sắp xếp code nữa -> hơi lộn xộn 
 
 
+/************************************************
+ * 
+ *          MODIFY THE NUMBER OF EACH ITEM
+ * 
+ */
+
+let btnIncreaseEls = document.getElementsByClassName('increase');
 
 
+btnIncreaseEls.forEach(el => {
+    el.addEventListener('click', increase)  // lúc đầu thì dòng ni bị hỏng vì lúc đầu chưa có sản phẩm nào cả
+})
+
+
+
+
+function increase(e) {
+    if (e.target.tagName == 'BUTTON') {
+        let x = e.target.previousElementSibling
+    }
+    if (e.target.tagName == 'IMG') {
+        let x = e.target.parentElement.previousElementSibling
+    }
+    
+    let y = +(x.textContent);
+
+    y += 1;
+
+    x.textContent = y;
+
+    interact('increase number of item')
+}
 
 
 

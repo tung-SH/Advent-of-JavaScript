@@ -170,15 +170,11 @@ function setDrawOut(i) {
 
 let btnIncreaseEls = document.getElementsByClassName('increase');
 
-// làm sao để mảng chứa các phẩn tử trong trang web được cập nhập liên tục
 
-if (btnIncreaseEls.length == 0) {
+btnIncreaseEls.forEach(el => {
+    el.addEventListener('click', increase)  // lúc đầu thì dòng ni bị hỏng vì lúc đầu chưa có sản phẩm nào cả
+})
 
-    btnIncreaseEls.forEach( (el) => {
-        el.addEventListener('click', increase)
-    } )
-
-}
 
 function increase(e) {
     if (e.target.tagName == 'BUTTON') {
