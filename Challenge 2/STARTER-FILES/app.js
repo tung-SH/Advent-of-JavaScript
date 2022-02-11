@@ -50,9 +50,11 @@ const menuItems = [
  *      TOGGLE ITEM WITH CART
  * 
  */
-menuItems.forEach(el => {
+menuItems.forEach( (el, i) => {
     el.isInCart = false;
+    el.id = i + 1;
 })
+
 
 const btnEls = document.body.querySelectorAll('.content button')
 
@@ -76,12 +78,12 @@ function toggleItem(i) {
 
 
 const cartSummary = document.body.querySelector('ul.cart-summary');
-let arrForDrawOutItem = [];
+// let arrForDrawOutItem = []; // vì có id trên từng sản phẩm rồi nên dòng này sẽ ko cần
 function addItem(i) {
     setAdded(i)
 
     let m = createEl('li', undefined, item(i))
-    arrForDrawOutItem[i] = m;
+    // arrForDrawOutItem[i] = m; // dòng này ko cần vì đã có id ròi 
 
     cartSummary.append(m)
 
@@ -89,7 +91,7 @@ function addItem(i) {
     interact('add item')
 }
 function item(i) {
-    return `<li>
+    return `<li id='cart-item-${menuItems[i].id}'>
     <div class="plate">
       <img src="images/${menuItems[i].image}" alt="Fish Sticks and Fries" class="plate" />
       <div class="quantity">1</div>
@@ -99,11 +101,11 @@ function item(i) {
       <p class="price">${menuItems[i].price}</p>
     </div>
     <div class="quantity__wrapper">
-      <button class="decrease">
+      <button class="decrease" onclick="cu_decrease(${menuItems[i].id})">
         <img src="images/chevron.svg" />
       </button>
       <div class="quantity">1</div>
-      <button class="increase">
+      <button class="increase" onclick="cu_increase(${menuItems[i].id})">
         <img src="images/chevron.svg" />
       </button>
     </div>
@@ -142,7 +144,8 @@ function setAdded(i) {
 function drawOutItem(i) {
     setDrawOut(i)
 
-    arrForDrawOutItem[i].remove()
+    // arrForDrawOutItem[i].remove()
+    document.body.querySelector(`#cart-item-${menuItems[i].id}`).remove();
 
     interact('draw out item')
 }
@@ -168,32 +171,32 @@ function setDrawOut(i) {
  * 
  */
 
-let btnIncreaseEls = document.getElementsByClassName('increase');
+function cu_increase(productId) {
+    running('cu_increase')
 
-
-btnIncreaseEls.forEach(el => {
-    el.addEventListener('click', increase)  // lúc đầu thì dòng ni bị hỏng vì lúc đầu chưa có sản phẩm nào cả
-})
-
-
-
-
-function increase(e) {
-    if (e.target.tagName == 'BUTTON') {
-        let x = e.target.previousElementSibling
-    }
-    if (e.target.tagName == 'IMG') {
-        let x = e.target.parentElement.previousElementSibling
-    }
-    
-    let y = +(x.textContent);
-
-    y += 1;
-
-    x.textContent = y;
+    const quantityEls = document.querySelectorAll(`#cart-item-${productId} .quantity`)
+    const quantity = +(quantityEls[0].textContent) + 1;
+    quantityEls[0].textContent = quantity
+    quantityEls[1].textContent = quantity
 
     interact('increase number of item')
+
 }
+function cu_decrease(productId) {
+    running('cu_decrease')
+
+    const quantityEls = document.querySelectorAll(`#cart-item-${productId} .quantity`)
+    const quantity = ( +(quantityEls[0].textContent) - 1 < 0) ? 0 : +(quantityEls[1].textContent - 1) ;
+    quantityEls[0].textContent = quantity
+    quantityEls[1].textContent = quantity
+
+    interact('decrease number of item')
+
+}
+
+// mình code được rồi nhưng mà khả năng mình ko tăng lên vì mình ko hiểu
+// vì sao mà mình lại có thể tư duy ra cách giải quyết vấn đề như thế 
+// học UML nào 
 
 
 
@@ -220,4 +223,8 @@ function interact(name) {
     `)
     else             console.log(`😋 ${name} chạy ổn à nha 😄😋
     `) 
+}
+function running(name) {
+    
+    return `${name} is running...`
 }
